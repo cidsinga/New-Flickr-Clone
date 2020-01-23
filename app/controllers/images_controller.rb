@@ -1,74 +1,65 @@
 class ImagesController < ApplicationController
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: [:index, :show]
 
-  # GET /images
-  # GET /images.json
   def index
-    @images = Image.all
+    # Code for viewing all images
+    # @user = User.find(session[:user_id])
+    # binding.pry
+
+    @images= Image.all
+    :index
   end
 
-  # GET /images/1
-  # GET /images/1.json
-  def show
-  end
-
-  # GET /images/new
   def new
+    # Code for new image form goes here.
     @image = Image.new
+    :new
   end
 
-  # GET /images/1/edit
-  def edit
-  end
-
-  # POST /images
-  # POST /images.json
   def create
+    # Code for creating a new image goes here.
+    # @user = User.find(session[:user_id])
     @image = Image.new(image_params)
-
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Image was successfully created.' }
-        format.json { render :show, status: :created, location: @image }
-      else
-        format.html { render :new }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
-      end
+    binding.pry
+    if @image.save
+      redirect_to images_path
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /images/1
-  # PATCH/PUT /images/1.json
+  def edit
+    # Code for edit image form goes here.
+    @image = Image.find(params[:id])
+    render :edit
+  end
+
+  def show
+    # Code for showing a single image goes here.
+    @user = User.find(params[:id])
+    @image = Image.find(params[:id])
+    render :show
+  end
+
   def update
-    respond_to do |format|
-      if @image.update(image_params)
-        format.html { redirect_to @image, notice: 'Image was successfully updated.' }
-        format.json { render :show, status: :ok, location: @image }
-      else
-        format.html { render :edit }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
-      end
+    # Code for updating an image goes here.
+    @image= Image.find(params[:id])
+    if @image.update(image_params)
+      redirect_to image_path
+    else
+      render :edit
     end
   end
 
-  # DELETE /images/1
-  # DELETE /images/1.json
   def destroy
+    # Code for deleting an image goes here.
+    @image = Image.find(params[:id])
     @image.destroy
-    respond_to do |format|
-      format.html { redirect_to images_url, notice: 'Image was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to root_path
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_image
-      @image = Image.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def image_params
-      params.fetch(:image, {})
-    end
+  def image_params
+    params.require(:image).permit(:title, :description, :user_id)
+  end
 end

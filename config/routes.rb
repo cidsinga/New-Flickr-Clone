@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post '/signin' => 'sessions#create'
   get '/signout' => 'sessions#destroy'
 
+
   resources :images
   resources :accounts do
     resources :images
