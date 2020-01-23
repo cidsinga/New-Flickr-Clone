@@ -37,12 +37,16 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'jquery-rails'
+gem 'bootstrap', '~> 4.4.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'launchy'
   gem 'pry'
+  gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'simplecov', require: false
 end
 
 group :development do
