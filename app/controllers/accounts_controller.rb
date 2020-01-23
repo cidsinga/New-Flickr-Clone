@@ -40,10 +40,14 @@ class AccountsController < ApplicationController
 
   def update
     @account= Account.find(params[:id])
-    if @account.update(account_params)
-      redirect_to accounts_path
+    if @account.admin = true
+      if @account.update(account_params)
+        redirect_to accounts_path
+      else
+        render :edit
+      end
     else
-      render :edit
+      flash[:notice] = "You don't have those privileges."
     end
   end
 
