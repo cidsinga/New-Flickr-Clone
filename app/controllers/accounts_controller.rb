@@ -1,5 +1,6 @@
 
 class AccountsController < ApplicationController
+  before_action :authorize, only: [:index, :show]
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def index
