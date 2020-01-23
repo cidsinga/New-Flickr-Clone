@@ -1,4 +1,5 @@
 class Account < ApplicationRecord
+  has_many :images
   attr_accessor :password
   validates_confirmation_of :password
   validates :email, :presence => true, :uniqueness => true
@@ -12,7 +13,6 @@ class Account < ApplicationRecord
 
   def self.authenticate(email, password)
     account = Account.find_by "email = ?", email
-    # binding.pry
     if account && account.password_hash == BCrypt::Engine.hash_secret(password, account.password_salt)
       account
     else
