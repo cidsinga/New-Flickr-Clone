@@ -18,6 +18,9 @@ class AccountsController < ApplicationController
     if @account.save
       flash[:notice] = "You've successfully signed up!"
       session[:account_id] = @account.id
+      if @account.admin = true
+        flash[:notice] = "Welcome, Admin"
+      end
       redirect_to "/images"
     else
       flash[:alert] = "There was a problem signing up."
@@ -45,7 +48,6 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    binding.pry
     session[:account_id] = nil
     @account = Account.find(params[:id])
     @account.destroy
@@ -59,6 +61,6 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
   end
   def account_params
-    params.require(:account).permit(:name, :email, :password)
+    params.require(:account).permit(:name, :email, :password, :admin)
   end
 end
