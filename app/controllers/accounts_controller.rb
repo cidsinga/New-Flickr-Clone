@@ -17,7 +17,7 @@ class AccountsController < ApplicationController
     if @account.save
       flash[:notice] = "You've successfully signed up!"
       session[:account_id] = @account.id
-      redirect_to "/"
+      redirect_to "/images"
     else
       flash[:alert] = "There was a problem signing up."
       redirect_to '/signup'

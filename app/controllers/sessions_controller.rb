@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     if @account
       flash[:notice] = "You've signed in."
       session[:account_id] = @account.id
-      redirect_to "/"
+      redirect_to "/images"
     else
       flash[:alert] = "There was a problem signing in. Please try again."
       redirect_to signin_path
