@@ -5,6 +5,7 @@ class AccountsController < ApplicationController
 
   def index
     @accounts = Account.all
+    # binding.pry
     render :index
   end
 
@@ -16,10 +17,12 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     if @account.save
-      flash[:notice] = "You've successfully signed up!"
       session[:account_id] = @account.id
-      if @account.admin = true
+      binding.pry
+      if current_account.admin === true
         flash[:notice] = "Welcome, Admin"
+      else
+        flash[:notice] = "You've successfully signed up!"
       end
       redirect_to "/images"
     else
@@ -40,7 +43,7 @@ class AccountsController < ApplicationController
 
   def update
     @account= Account.find(params[:id])
-    if @account.admin = true
+    if current_account.admin === true
       if @account.update(account_params)
         redirect_to accounts_path
       else
@@ -49,6 +52,7 @@ class AccountsController < ApplicationController
     else
       flash[:notice] = "You don't have those privileges."
     end
+    render :show
   end
 
   def destroy
