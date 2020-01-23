@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def authorize
     if !current_account
       flash[:alert] = "You aren't authorized to visit that page."
-      redirect_to '/'
+      redirect_to 'accounts#new'
     end
   end
 end

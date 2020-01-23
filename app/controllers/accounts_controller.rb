@@ -57,6 +57,7 @@ class AccountsController < ApplicationController
       format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
       format.json { head :no_content }
     end
+    redirect_to root_path
   end
 
   private
